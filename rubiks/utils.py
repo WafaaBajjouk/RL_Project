@@ -1,5 +1,7 @@
+# Rubiks/utils.py
+
 import random
-from rubiks.state import State
+from Rubiks.state import State
 
 def num_pieces_correct_side(state):
     correct = 0
@@ -51,7 +53,6 @@ def shuffle(cube, n=5):
 
 def random_move(cube):
     action = random.choice(cube.actions)
-    print("executing " + action + " 180 rotation")
     cube = move(cube, action)
     return cube
 

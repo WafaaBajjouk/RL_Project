@@ -1,4 +1,7 @@
+# Rubiks/state.py
+
 import copy
+
 class State:
     def __init__(self, size=3, c=None):
         self.size = size
@@ -13,7 +16,6 @@ class State:
             self.__bottom__ = c["bottom"]
             self.__sides__ = [self.front(), self.back(), self.left(), self.right(), self.top(), self.bottom()]
             return
-        
         self.__front__ = [['W','W','W'],['W','W','W'],['W','W','W']]
         self.__back__ = [['Y','Y','Y'],['Y','Y','Y'],['Y','Y','Y']]
         self.__top__ = [['R','R','R'],['R','R','R'],['R','R','R']]
@@ -23,10 +25,9 @@ class State:
         self.__sides__ = [self.front(), self.back(), self.left(), self.right(), self.top(), self.bottom()]
         self.d = {"front": self.front(), "back": self.back(), "left": self.left(),\
                     "right": self.right(), "top": self.top(), "bottom": self.bottom()}
-    
+
     def copy(self):
-        new_s = copy.deepcopy(self)
-        return new_s
+        return copy.deepcopy(self)
 
     def eq(self, other):
         return self.__left__ == other.left() and self.__right__ == other.right()\
@@ -35,33 +36,44 @@ class State:
 
     def left(self):
         return self.__left__
+
     def set_left(self, l):
         self.__left__ = l
+
     def right(self):
         return self.__right__
+
     def set_right(self, r):
         self.__right__ = r
+
     def top(self):
         return self.__top__
+
     def set_top(self, t):
         self.__top__ = t
+
     def bottom(self):
         return self.__bottom__
+
     def set_bottom(self, b):
         self.__bottom__ = b
+
     def front(self):
         return self.__front__
+
     def set_front(self, f):
         self.__front__ = f
+
     def back(self):
         return self.__back__
+
     def set_back(self, b):
         self.__back__ = b
 
     def __str__(self):
         return "\nFRONT" + str(self.__front__) + "\nBACK" + str(self.__back__) + "\nLEFT" \
         + str(self.__left__) + "\nRIGHT" + str(self.__right__) + "\nTOP" + str(self.__top__) + "\nBOTTOM" + str(self.__bottom__)
-    
+
     def __hash__(self):
         return hash(self.__str__())
 
