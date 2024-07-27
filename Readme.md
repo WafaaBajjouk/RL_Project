@@ -25,3 +25,10 @@ This project aims to solve the Rubik's Cube using feature-based Q-Learning and a
   - **State Evaluation**: Functions to assess solved sides, correct pieces, crosses, and X patterns.
   - **State Manipulation**: Functions to shuffle the cube and apply random or specific moves.
   - **Move Execution**: Applies specified actions to a cube state and returns the resulting state.
+
+### `cube_visualisation.py`
+- **Purpose**: Provides a visual representation of the Rubik's Cube.
+- **Key Features**:
+  - **draw_cube(state)**: Draws a 2D representation of the cube's current state with each face having distinct color patches separated by black borders.
+  - **Plot Setup**: Configures the plot with subplots and specific axis properties to align the faces of the cube in a standard unfolded format.
+
