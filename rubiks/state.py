@@ -1,5 +1,3 @@
-# Rubiks/state.py
-
 import copy
 
 class State:
@@ -7,6 +5,7 @@ class State:
         self.size = size
         self.actions = ['front', 'back', 'left', 'right', 'top', 'bottom']
         if c:
+            # 2D lists representing the six faces of the cube.
             self.d = c
             self.__front__ = c["front"]
             self.__back__ = c["back"]
@@ -14,6 +13,7 @@ class State:
             self.__right__ = c["right"]
             self.__top__ = c["top"]
             self.__bottom__ = c["bottom"]
+            # list all sides of the cube.
             self.__sides__ = [self.front(), self.back(), self.left(), self.right(), self.top(), self.bottom()]
             return
         self.__front__ = [['W','W','W'],['W','W','W'],['W','W','W']]
@@ -23,8 +23,9 @@ class State:
         self.__left__ = [['B','B','B'],['B','B','B'],['B','B','B']]
         self.__right__ = [['G','G','G'],['G','G','G'],['G','G','G']]
         self.__sides__ = [self.front(), self.back(), self.left(), self.right(), self.top(), self.bottom()]
+        #map the names of the sides to their corresponding 2D lists.
         self.d = {"front": self.front(), "back": self.back(), "left": self.left(),\
-                    "right": self.right(), "top": self.top(), "bottom": self.bottom()}
+                    "right": self.right(), "top": self.top(), "bottom": self.bottom()} 
 
     def copy(self):
         return copy.deepcopy(self)
@@ -70,6 +71,7 @@ class State:
     def set_back(self, b):
         self.__back__ = b
 
+# gives a string repres of the cube's state.
     def __str__(self):
         return "\nFRONT" + str(self.__front__) + "\nBACK" + str(self.__back__) + "\nLEFT" \
         + str(self.__left__) + "\nRIGHT" + str(self.__right__) + "\nTOP" + str(self.__top__) + "\nBOTTOM" + str(self.__bottom__)
@@ -193,6 +195,8 @@ class State:
         self.turn_front()
         self.flip_cube(forward=True)
 
+
+#   !!!! Checks if the cube is in the solved state by verifying that each face has the same color in all positions
     def isGoalState(self):
         for side in self.__sides__:
             char = side[0][0]
@@ -201,6 +205,7 @@ class State:
                     return False
         return True
 
+# Executes a move based on the given action (left, right, front, back, top, bottom)   , to do : check for better implementations
     def move(self, action):
         if action == 'left':
             self.turn_left()
@@ -215,3 +220,14 @@ class State:
         elif action == 'bottom':
             self.turn_bottom()
         self.__sides__ = [self.front(), self.back(), self.left(), self.right(), self.top(), self.bottom()]
+
+
+# Cube Manipulation Methods: 
+# rotate_side: Rotates a given side of the cube clockwise.
+# columns_to_rows: Converts columns of a side to rows (used for rotating).
+# rotate_cube: Rotates the entire cube.
+# swap_first_row: Swaps the first rows of two sides.
+# swap_first_last_col: Swaps the first column of one side with the last column of another side.
+# replace_side: Creates a copy of a given side.
+# flip_forward, flip_backward, flip_cube: Flips the cube forward or backward.
+# turn_front, turn_back, turn_left, turn_right, turn_top, turn_bottom: Rotates the cube in various directions to simulate moves.

@@ -1,5 +1,3 @@
-# Rubiks/utils.py
-
 import random
 from Rubiks.state import State
 

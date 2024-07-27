@@ -1,5 +1,3 @@
-# Rubiks/agent.py
-
 import random
 from Rubiks.state import State
 from Rubiks.utils import move, num_solved_sides, num_pieces_correct_side, n_move_state
@@ -8,16 +6,18 @@ ALPHA = 0.6
 
 class Agent:
     def __init__(self, QValues=None, cube=None):
-        self.visited = []
-        self.visit_count = {}
-        self.revisits = 0
-        self.QV = QValues if QValues is not None else {}
-        self.R = {}
+        self.visited = []   #track visited states
+        self.visit_count = {}  #count visits to states.
+        self.revisits = 0   
+        self.QV = QValues if QValues is not None else {} 
+        self.R = {}      # store rewards.
+    #initial state of the cube, default = cube shuffled with 6 random moves
         self.start_state = cube if cube is not None else n_move_state(n=6)
         self.curr_state = self.start_state
         self.prev_state = None
         self.second_last_action = None
-        self.actions = self.start_state.actions
+        self.actions = self.start_state.actions #possible actions/moves.
+    #track states at various distances (number of moves) from the current state
         self.one_away = []
         self.two_away = []
         self.three_away = []
@@ -25,9 +25,11 @@ class Agent:
         self.five_away = []
         self.six_away = []
         self.last_action = None
+    #count moves for each face of the cube.
         self.move = {"front": 0, "back": 0, "left": 0, "right": 0, "top": 0, "bottom": 0}
 
     def register_patterns(self):
+    #method initializes Q-values for different states based on their distance from the solved state
         s = State()
         for action in self.actions:
             s_ = move(s, action)
@@ -69,19 +71,18 @@ class Agent:
         next_state = move(state, action)
         if next_state.isGoalState():
             return 100
-        reward = -0.1
-        solved_sides = 2 * (num_solved_sides(next_state) < num_solved_sides(state))
-        solved_pieces = 0.5 * (num_pieces_correct_side(next_state) < num_pieces_correct_side(state))
+        solved_sides = num_solved_sides(next_state) - num_solved_sides(state)
+        reward = solved_sides if solved_sides > 0 else -0.1
         if (next_state.__hash__(), action) in self.QV.keys():
             reward -= 0.2
-        reward -= solved_sides
-        reward -= solved_pieces
         return reward
 
     def max_reward(self, state, action):
         new_state = move(state, action)
-        if not new_state in self.R.keys():
+        if new_state not in self.R:
             self.R[new_state] = []
             for action in self.actions:
                 self.R[new_state].append(self.reward(new_state, action))
         return max(self.R[new_state])
+    
+    # gives a reward of 1 for each solved cube side after taking an action
