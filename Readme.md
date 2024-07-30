@@ -1,6 +1,6 @@
 # Rubik's Cube Solver using Reinforcement Learning
 
-This project aims to solve the Rubik's Cube using feature-based Q-Learning and a pattern database. The algorithm quickly estimates the best moves by recording the minimum number of moves required to solve specific parts or patterns of the cube.
+This project aims to solve the Rubik's Cube using feature-based Q-Learning using Memory Replay and a pattern database. 
 
 ## Overview
 
